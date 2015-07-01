@@ -1,4 +1,10 @@
 /Debug/
 /Release/
+/particlenet/particlenet.Windows/Debug/
+/particlenet/particlenet.Windows/Release/
+/particlenet/particlenet.Windows/Generated Files/
+/particlenet/particlenet.WindowsPhone/Debug/
+/particlenet/particlenet.WindowsPhone/Release/
+/particlenet/particlenet.WindowsPhone/Generated Files/
 /ipch/
 *.sdf
