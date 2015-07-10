@@ -16,17 +16,21 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\main.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\ofApp.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)arithmetic.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Common\InputEvent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Common\Renderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DotParticle.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Particle.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ParticleNet.cpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\ofApp.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)arithmetic.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Common\InputEvent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Common\Renderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AngleAppMain.h" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AngleAppMain.cpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DotParticle.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)logic.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)meta.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Particle.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ParticleNet.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />

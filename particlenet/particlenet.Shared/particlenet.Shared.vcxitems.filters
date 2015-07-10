@@ -32,6 +32,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ParticleNet.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)logic.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)arithmetic.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)meta.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
@@ -60,6 +69,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ParticleNet.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)arithmetic.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

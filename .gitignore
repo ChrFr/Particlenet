@@ -1,5 +1,6 @@
 /Debug/
 /Release/
+/emath-cpp/
 /particlenet/particlenet.Windows/Debug/
 /particlenet/particlenet.Windows/Release/
 /particlenet/particlenet.Windows/Generated Files/
@@ -8,3 +9,4 @@
 /particlenet/particlenet.WindowsPhone/Generated Files/
 /ipch/
 *.sdf
+*.v12.suo

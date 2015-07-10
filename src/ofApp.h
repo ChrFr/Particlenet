@@ -4,6 +4,7 @@
 #include "ofMain.h"
 
 #include "ParticleNet.h"
+#include "arithmetic.h"
 
 #define N_PARTICLES 2000
 
@@ -26,8 +27,22 @@ public:
 
 	ParticleNet *particleNet;
 
-	ofSoundPlayer sound;
+	void audioIn(float * input, int bufferSize, int nChannels);
 
-	int nBandsToGet;
+	std::complex<double>* left;
+	std::complex<double>* right;
+	std::complex<double> val;
+	//vector <float> left;
+	//vector <float> right;
+	vector <float> volHistory;
+
+	int bufferCounter;
+	int drawCounter;
+
+	float smoothedVol;
+	float scaledVol;
+
+	ofSoundStream soundStream;
+
 };
 
