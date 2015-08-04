@@ -13,9 +13,6 @@
     <ClCompile Include="src\DotParticle.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\emath-cpp.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\Particle.cpp">
       <Filter>src</Filter>
     </ClCompile>

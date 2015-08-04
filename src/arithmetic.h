@@ -116,24 +116,6 @@ namespace emath {
 	inline long long signum (const signed long long operand) {
 		return (operand > 0) - (operand < 0);
 	}
-	inline float signum (const float operand) {
-		return copysignf(1.0f, operand);
-	}
-	inline double signum (const double operand) {
-		return copysign(1.0, operand);
-	}
-	inline long double signum (const long double operand) {
-		return copysignl(1.0l, operand);
-	}
-	inline std::complex<float> signum (const std::complex<float> operand) {
-		return (operand.real() == 0.0f) & (operand.imag() == 0.0f) ? signum(operand.real()) : operand / emath::abs(operand);
-	}
-	inline std::complex<double> signum (const std::complex<double> operand) {
-		return (operand.real() == 0.0) & (operand.imag() == 0.0) ? signum(operand.real()) : operand / emath::abs(operand);
-	}
-	inline std::complex<long double> signum (const std::complex<long double> operand) {
-		return (operand.real() == 0.0l) & (operand.imag() == 0.0l) ? signum(operand.real()) : operand / emath::abs(operand);
-	}
 
 
 	/**

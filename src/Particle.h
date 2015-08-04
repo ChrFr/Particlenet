@@ -9,10 +9,7 @@ private:
 	//the radius of the area of effect around the particle
 	float forceRadius;
 	float maxDistance;
-
-	//the energy the particle moves with
-	float kineticEnergy;
-
+	
 	float startSize;
 
 public:
@@ -26,10 +23,14 @@ public:
 	ofColor color;
 
 	//current position
-	ofVec2f pos;
+	ofPoint pos;
 
 	//start position
-	ofVec2f startPos;
+	ofPoint startPos;
+		
+	ofPoint velocity;
+	ofPoint direction;
+	vector<Particle *> neighbours;
 
 	//position in grid	
 	float c;
@@ -44,6 +45,6 @@ public:
 
 	void update();
 
-	ofVec2f kDir;
+	void Particle::pull(float z);
 };
 #endif

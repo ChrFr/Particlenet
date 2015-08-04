@@ -6,6 +6,7 @@ void ofApp::setup(){
 	ofSetFrameRate(30);
 	ofBackground(0);
 	particleNet = new ParticleNet(N_PARTICLES);
+	lastMousePos = ofPoint(0, 0);
 
 	// 0 output channels, 
 	// 2 input channels
@@ -14,15 +15,20 @@ void ofApp::setup(){
 	// 4 num buffers (latency)
 	soundStream.listDevices();
 
+	nBandsToGet = 8;
+
+ 	sound.loadSound("mp3/test2.mp3");
+	sound.play();
+
 	//if you want to set a different device id 
 	//soundStream.setDeviceID(1); //bear in mind the device id corresponds to all audio devices, including  input-only and output-only devices.
-
+/*
 	int bufferSize = 256;
 
 	left = new std::complex<double>[bufferSize];
 	for (int i = 0; i<bufferSize; i++)
 		left[i] = 0.0;
-/*	
+	
 	left.assign(bufferSize, 0.0);/*
 	right.assign(bufferSize, 0.0);
 	volHistory.assign(400, 0.0);
@@ -30,32 +36,28 @@ void ofApp::setup(){
 	bufferCounter = 0;
 	drawCounter = 0;
 	smoothedVol = 0.0;
-	scaledVol = 0.0;*/
-    soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
+	scaledVol = 0.0;
+    soundStream.setup(this, 0, 2, 44100, bufferSize, 4);*/
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	emath::fft(8, left);
+	/*emath::fft(8, left);
 	val = 0;
 	for (int i = 0; i < 20; i++){
 		double power = left[i].real()*left[i].real() + left[i].imag()*left[i].imag();
 		val += sqrt(power);
 	}
-	val /= 20;
-
-
-	//float * val = ofSoundGetSpectrum(nBandsToGet);
-	//float sumLow = 0;
-	/*
+	val /= 20;*/
+	float * val = ofSoundGetSpectrum(nBandsToGet);
+		
 	particleNet->pull(ofGetWindowWidth() / 2 - 100, ofGetWindowHeight() / 2 - 100, 200, 200, val[0]);
-	particleNet->hit(3, 0, ofVec2f(0, 10) * val[1]);
-	particleNet->hit(6, 0, ofVec2f(0, 10) * val[2]);
-	particleNet->hit(9, 0, ofVec2f(0, 10) * val[3]);
-	particleNet->hit(12, 0, ofVec2f(0, 10) * val[4]);
-	particleNet->hit(15, 0, ofVec2f(0, 10) * val[5]);
-	particleNet->hit(18, 0, ofVec2f(0, 10) * val[6]);
-	particleNet->hit(21, 0, ofVec2f(0, 10) * val[7]);*/
+	particleNet->push(ofGetWindowWidth() / 4, 0, ofPoint(0, 20) * val[1]);
+	particleNet->push(ofGetWindowWidth() / 2, 0, ofPoint(0, 20) * val[2]);
+	particleNet->push(ofGetWindowWidth() * 3 / 4, 0, ofPoint(0, 20) * val[3]);
+	particleNet->push(ofGetWindowWidth() / 4, ofGetWindowHeight(), ofPoint(0, -20) * val[4]);
+	particleNet->push(ofGetWindowWidth() / 2, ofGetWindowHeight(), ofPoint(0, -20) * val[5]);
+	particleNet->push(ofGetWindowWidth() * 3 / 4, ofGetWindowHeight(), ofPoint(0, -20) * val[6]);
 	particleNet->update();
 }
 
@@ -102,7 +104,7 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	particleNet->push(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2, ofPoint(0, 10) * 2);
 }
 
 //--------------------------------------------------------------
@@ -111,7 +113,9 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y){
-
+	ofPoint mousePos = ofPoint(x, y);
+	particleNet->push(x, y, (mousePos - lastMousePos) * 0.1);
+	lastMousePos = mousePos;
 }
 
 //--------------------------------------------------------------
@@ -121,7 +125,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+	
 }
 
 //--------------------------------------------------------------

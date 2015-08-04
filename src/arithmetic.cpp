@@ -17,7 +17,10 @@ namespace emath {
 			for (uint64_t offset = 0, stop = 1ULL << magnitude, left = 0; left < stop; ++left) {
 				const uint64_t right = reverse(left) >> (bitSize(uint64_t) - magnitude);
 				if (left < right) {
-					table[offset++] = shuffle_pair { left, right }; //Christoph: removed brackets around shuffle_pair
+					shuffle_pair pair;
+					pair.left = left;
+					pair.right = right;
+					table[offset++] = pair; //Christoph: cast didnt work, init struct pair added
 				}
 			}
 			SHUFFLE_TABLES[magnitude] = table;

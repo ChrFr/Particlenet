@@ -18,11 +18,10 @@ private:
 
 	int pxDistance;
 
-	vector<Particle *> particles;
+	vector<Particle*> particles;
 
-	Particle** getNeighbours(int c, int r);
-	Particle** getNeighbours(int pos);
-	void ParticleNet::pull(Particle *particle, float z);
+	vector<Particle*> getNeighbours(int c, int r);
+	vector<Particle*> getNeighbours(int pos);
 
 public:
 	// Constructor
@@ -34,7 +33,7 @@ public:
 	Particle* at(int r, int c);
 	void drawMulticolorLine(int x1, int y1, int x2, int y2, ofColor color1, ofColor color2);
 
-	void hit(int c, int r, ofVec2f dir);
+	void push(int x, int y, ofPoint dir);
 
 	void draw();
 	void update();

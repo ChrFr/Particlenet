@@ -2,15 +2,15 @@
 
 Particle::Particle(float x, float y, float size, int c, int r, float forceRadius, float maxDistance) : startSize(size), size(size), c(c), r(r), forceRadius(forceRadius), maxDistance(maxDistance){
 	z = 0;
-	kDir = ofVec2f(0, 0);
-	pos = ofVec2f(x, y);
-	startPos = ofVec2f(x, y);
+	velocity = ofPoint(0, 0);
+	pos = ofPoint(x, y);
+	startPos = ofPoint(x, y);
 }
 
 void Particle::adaptAppearance(){
 	int brightness = 128 + z * 128;
 	int saturation = 255;
-	float hue = 170 - kDir.length() * 70;
+	float hue = 170 - direction.length() * 70;
 	if (hue < 0)
 		hue = 0;
 	if (z > 0)
@@ -22,33 +22,45 @@ void Particle::adaptAppearance(){
 }
 
 void Particle::update(){
-	//z blocks movement
-	kDir *= (1 - z);
-	if (kDir.length() != 0){
-		pos += kDir;
-		//kDir *= 0.9;
-	}
-	//if((pos - startPos).length() <= 0) this won't work (no negative length)
-	//	kDir *= 0;
-	if ((pos - startPos).length() >= maxDistance || kDir.length() < 0.1){
-		//kDir *=  startPos - pos;
-		//if(kDir.length() < 1)
-		kDir = kDir.normalize();
-		kDir *= -1;
-	}/*
-	 if(kDir.length() != 0){
-	 kDir *= (1 - z);
-	 kDir *= 0.95;
-	 if((pos - startPos).length() >= maxDistance){
-	 if(kDir.length() < 1)
-	 kDir = kDir.normalize();
-	 pos -= 5 * kDir;
-	 }
-	 else
-	 pos += kDir;
-	 }*/
+	
+	// push neighbours
+	if(direction.length() > 0.1) 
+		for (int j = 0; j < neighbours.size(); j++){
+			Particle* neighbour = neighbours.at(j);
+			if((neighbour)){// && (pos - neighbour->pos).length() <= 20){
+				ofPoint a = pos - neighbour->pos;
+				float angle = acos(a.getNormalized().dot(direction.getNormalized()));
+				// is neighbour in direction of movement? (theta < 90°)
+				if(angle < 3.14/2){
+					neighbour->direction = a.getNormalized() * direction.length() * 0.8;
+				}
+			}
+		}
+	
+	// particle is always dragged back to its starting point
+	ofPoint dist = startPos-pos;
+	ofPoint retraction = dist.getNormalized() * (dist.length() / maxDistance) * 0.5;
+	pos += direction + retraction;
+
+	// energy reduces over time
+	direction *= 0.95;
+	
+	// move z 
 	if (z > 0)
 		z -= 0.1;
 	else if (z < 0)
 		z = 0;
+}
+
+// pull single particle and its neighbours recursively
+void Particle::pull(float z){
+	//end of recursion
+	if (z < 0.1 || this->z >= z)
+		return;
+	this->z = z;
+	for (int j = 0; j < neighbours.size(); j++){
+		Particle* neighbour = neighbours[j];
+		if (neighbour)
+			neighbour->pull(z * 0.8);
+	}
 }

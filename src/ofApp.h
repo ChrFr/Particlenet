@@ -6,7 +6,7 @@
 #include "ParticleNet.h"
 #include "arithmetic.h"
 
-#define N_PARTICLES 2000
+#define N_PARTICLES 10000
 
 class ofApp : public ofBaseApp{
 
@@ -35,6 +35,7 @@ public:
 	//vector <float> left;
 	//vector <float> right;
 	vector <float> volHistory;
+	ofPoint lastMousePos;
 
 	int bufferCounter;
 	int drawCounter;
@@ -43,6 +44,9 @@ public:
 	float scaledVol;
 
 	ofSoundStream soundStream;
+	ofSoundPlayer sound;
+
+	int nBandsToGet;
 
 };
 

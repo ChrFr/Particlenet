@@ -2,3 +2,5 @@
 *.sdf
 *.v12.suo
 /particlenet.opensdf
+/bin
+*.v11.suo

@@ -5,7 +5,10 @@
 #define META_H_ 1
 
 #include <cstdint>
-#include <cstdbool>
+//#include <cstdbool>
+typedef int cstdbool;
+#define false 0
+#define true 1
 
 
 /**
