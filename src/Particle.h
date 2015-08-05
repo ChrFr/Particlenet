@@ -30,6 +30,7 @@ public:
 		
 	ofPoint velocity;
 	ofPoint direction;
+	ofPoint nextDir;
 	vector<Particle *> neighbours;
 
 	//position in grid	
@@ -46,5 +47,6 @@ public:
 	void update();
 
 	void Particle::pull(float z);
+	void Particle::push(ofPoint dir);
 };
 #endif

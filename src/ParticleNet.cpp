@@ -20,9 +20,9 @@ void ParticleNet::draw(){
 		(*it)->draw();
 
 		//Particle** neighbours = getNeighbours(i);	
-
+		/*
 		//draw lines to the left/upperleft/upper/right neighbour
-		/*for(int n = 0; n < 4; n++)
+		for(int n = 0; n < 4; n++)
 			if((*it)->neighbours[n])
 				drawMulticolorLine((*it)->pos.x, (*it)->pos.y, (*it)->neighbours[n]->pos.x, (*it)->neighbours[n]->pos.y, (*it)->color, (*it)->neighbours[n]->color);
 		*/
@@ -54,6 +54,8 @@ vector<Particle *> ParticleNet::getNeighbours(int c, int r){
 	// every particle has potentially 8 neighbours
 	vector<Particle *> neighbours;
 
+	Particle * neighbour;
+	
 	// upper left
 	neighbours.push_back(at(c - 1, r - 1));
 	// upper
@@ -109,9 +111,9 @@ void ParticleNet::push(int x, int y, ofPoint dir){
 	int r = (y / pxDistance);
 
 	Particle *particle = at(c, r);
-	if ((particle->pos - particle->startPos).length() <= pxDistance / 2)
+	//if ((particle->pos - particle->startPos).length() <= pxDistance / 2)
 		particle->direction = dir;
-	//cout << at(c, r)->kDir.length(); cout << "\n";
+		//particle->push(dir);
 };
 
 void ParticleNet::update(){
@@ -121,4 +123,12 @@ void ParticleNet::update(){
 		(*it)->update();
 		it++;
 	}
+	it = particles.begin();
+	while (it != particles.end()){
+		
+		(*it)->direction = (*it)->nextDir;
+		(*it)->nextDir = ofPoint(0, 0);
+		it++;
+	}
+
 };

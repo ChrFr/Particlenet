@@ -10,7 +10,9 @@ Particle::Particle(float x, float y, float size, int c, int r, float forceRadius
 void Particle::adaptAppearance(){
 	int brightness = 128 + z * 128;
 	int saturation = 255;
-	float hue = 170 - direction.length() * 70;
+	float energy = (direction.length() > 2) ? 2: direction.length();
+	ofPoint dist = startPos-pos;
+	float hue = 170 - (dist.length() / maxDistance) * 170;
 	if (hue < 0)
 		hue = 0;
 	if (z > 0)
@@ -23,28 +25,34 @@ void Particle::adaptAppearance(){
 
 void Particle::update(){
 	
-	// push neighbours
+	// push neighbours	
 	if(direction.length() > 0.1) 
 		for (int j = 0; j < neighbours.size(); j++){
 			Particle* neighbour = neighbours.at(j);
-			if((neighbour)){// && (pos - neighbour->pos).length() <= 20){
+			if(neighbour){
+				//if((neighbour)){// && (pos - neighbour->pos).length() <= 20){
 				ofPoint a = pos - neighbour->pos;
-				float angle = acos(a.getNormalized().dot(direction.getNormalized()));
-				// is neighbour in direction of movement? (theta < 90°)
-				if(angle < 3.14/2){
-					neighbour->direction = a.getNormalized() * direction.length() * 0.8;
-				}
+				float b = a.getNormalized().dot(direction.getNormalized());
+				// is neighbour in direction of movement?
+				if(b > 0.5 && b <= 1){
+					neighbour->nextDir = a.getNormalized() * direction.length() * 0.8;
+				}			
 			}
 		}
-	
+		
 	// particle is always dragged back to its starting point
 	ofPoint dist = startPos-pos;
-	ofPoint retraction = dist.getNormalized() * (dist.length() / maxDistance) * 0.5;
+	ofPoint retraction = dist.getNormalized() * (dist.length() / maxDistance);
 	pos += direction + retraction;
 
 	// energy reduces over time
-	direction *= 0.95;
-	
+	direction *= 0.95;	
+	/*
+	if(nextDir.length() > 0){
+		direction = nextDir;
+		nextDir = ofPoint(0, 0);
+	}*/
+
 	// move z 
 	if (z > 0)
 		z -= 0.1;
@@ -64,3 +72,20 @@ void Particle::pull(float z){
 			neighbour->pull(z * 0.8);
 	}
 }
+
+void Particle::push(ofPoint dir){
+	direction = dir;
+	if(dir.length() < 0.1)
+		return;
+	for (int j = 0; j < neighbours.size(); j++){
+		Particle* neighbour = neighbours.at(j);
+		if((neighbour)){// && (pos - neighbour->pos).length() <= 20){
+			ofPoint a = pos - neighbour->pos;
+			float b = a.getNormalized().dot(direction.getNormalized());
+			// is neighbour in direction of movement? (theta < 90°)
+			if(b > 0.25 && b <= 1){
+				neighbour->push(a.getNormalized() * direction.length() * 0.8);
+			}	
+		}
+	}
+};

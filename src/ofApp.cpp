@@ -52,12 +52,12 @@ void ofApp::update(){
 	float * val = ofSoundGetSpectrum(nBandsToGet);
 		
 	particleNet->pull(ofGetWindowWidth() / 2 - 100, ofGetWindowHeight() / 2 - 100, 200, 200, val[0]);
-	particleNet->push(ofGetWindowWidth() / 4, 0, ofPoint(0, 20) * val[1]);
-	particleNet->push(ofGetWindowWidth() / 2, 0, ofPoint(0, 20) * val[2]);
-	particleNet->push(ofGetWindowWidth() * 3 / 4, 0, ofPoint(0, 20) * val[3]);
-	particleNet->push(ofGetWindowWidth() / 4, ofGetWindowHeight(), ofPoint(0, -20) * val[4]);
-	particleNet->push(ofGetWindowWidth() / 2, ofGetWindowHeight(), ofPoint(0, -20) * val[5]);
-	particleNet->push(ofGetWindowWidth() * 3 / 4, ofGetWindowHeight(), ofPoint(0, -20) * val[6]);
+	particleNet->push(ofGetWindowWidth() / 4, ofGetWindowHeight() / 10, ofPoint(0, 20) * val[1]);
+	particleNet->push(ofGetWindowWidth() / 2, ofGetWindowHeight() / 10, ofPoint(0, 20) * val[2]);
+	particleNet->push(ofGetWindowWidth() * 3 / 4, ofGetWindowHeight() / 10, ofPoint(0, 20) * val[3]);
+	particleNet->push(ofGetWindowWidth() / 4, ofGetWindowHeight() * 9 / 10, ofPoint(0, -20) * val[4]);
+	particleNet->push(ofGetWindowWidth() / 2, ofGetWindowHeight() * 9 / 10, ofPoint(0, -20) * val[5]);
+	particleNet->push(ofGetWindowWidth() * 3 / 4, ofGetWindowHeight() * 9 / 10, ofPoint(0, -20) * val[6]);
 	particleNet->update();
 }
 
@@ -114,7 +114,7 @@ void ofApp::keyReleased(int key){
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y){
 	ofPoint mousePos = ofPoint(x, y);
-	particleNet->push(x, y, (mousePos - lastMousePos) * 0.1);
+	particleNet->push(x, y, (mousePos - lastMousePos));
 	lastMousePos = mousePos;
 }
 
