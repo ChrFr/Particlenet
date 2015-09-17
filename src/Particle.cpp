@@ -31,7 +31,7 @@ void Particle::update(){
 			Particle* neighbour = neighbours.at(j);
 			if(neighbour){
 				//if((neighbour)){// && (pos - neighbour->pos).length() <= 20){
-				ofPoint a = pos - neighbour->pos;
+				ofPoint a = neighbour->pos - pos;
 				float b = a.getNormalized().dot(direction.getNormalized());
 				// is neighbour in direction of movement?
 				if(b > 0.5 && b <= 1){
